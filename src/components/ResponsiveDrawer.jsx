@@ -1,0 +1,46 @@
+import React from 'react';
+import { CssBaseline, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+
+import Main from '../sections/Main';
+import Side from '../sections/Side';
+
+const ResponsiveDrawer = () => {
+  let inputEl = null;
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('md'));
+
+  const [openDrawer, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    if (!matches) return;
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
+  const editClick = () => {
+    if (inputEl) {
+      inputEl.select();
+    }
+  };
+
+  return (
+    <div style={{ display: 'flex' }}>
+      <CssBaseline />
+
+      <Side onClose={handleDrawerClose} onEditClick={editClick} />
+
+      <Main
+        ref={(input) => (inputEl = input)}
+        open={openDrawer}
+        onOpen={handleDrawerOpen}
+        onClose={handleDrawerClose}
+      />
+    </div>
+  );
+};
+
+export default ResponsiveDrawer;
